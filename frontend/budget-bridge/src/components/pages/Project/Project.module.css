@@ -1,0 +1,65 @@
+.container,
+.service__form__container {
+  display: flex;
+  justify-content: space-between;
+  padding: 2em;
+  border-bottom: 1px solid gray;
+  margin-bottom: 1.2em;
+  padding-bottom: 1.2em;
+  flex-wrap: wrap;
+}
+
+.container h1,
+.container h2,
+.container p {
+  margin-bottom: 0.5em;
+}
+
+.container h1 {
+  background-color: black;
+  color: #ffbb33;
+  padding: 0.4em;
+  text-align: center;
+  border-radius: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.container span {
+  font-weight: bold;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  transition: 0.5s;
+  border-radius: 10px;
+  cursor: pointer;
+  max-height: 40px;
+  border: none;
+  width: 130px;
+  height: 60px;
+  font-size: 0.9em;
+}
+
+.btn:hover {
+  color: #ffbb33;
+}
+
+.info {
+  width: 100%;
+}
+
+.start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.service__items {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 100%;
+}
