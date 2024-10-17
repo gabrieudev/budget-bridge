@@ -1,0 +1,21 @@
+.container {
+  padding: 2em;
+}
+
+.container__title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.no__project {
+  display: block;
+  margin: 100px auto 100px auto;
+  font-size: 2em;
+  font-weight: bold;
+}
