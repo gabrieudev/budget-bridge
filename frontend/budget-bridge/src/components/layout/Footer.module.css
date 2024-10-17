@@ -1,0 +1,31 @@
+.footer {
+  background-color: black;
+  color: white;
+  padding: 2em;
+  text-align: center;
+}
+
+.footer p {
+  margin-top: 1.5em;
+}
+
+.footer p span {
+  font-weight: bold;
+  color: #ffbb33;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.list li a {
+  color: white;
+  font-size: 1.5em;
+  margin: 0 1em;
+}
+
+.list li a:hover {
+  color: #ffbb33;
+}
