@@ -1,0 +1,77 @@
+package br.com.gabrieudev.budget_bridge_backend.config.security;
+
+import org.keycloak.adapters.authorization.integration.jakarta.ServletPolicyEnforcerFilter;
+import org.keycloak.adapters.authorization.spi.ConfigurationResolver;
+import org.keycloak.adapters.authorization.spi.HttpRequest;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+import org.keycloak.representations.adapters.config.PolicyEnforcerConfig;
+import org.keycloak.util.JsonSerialization;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.io.IOException;
+
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.StreamUtils;
+import java.nio.charset.StandardCharsets;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+@KeycloakConfiguration
+public class SecurityConfig {
+
+    @Value("${kc.jwks-uri}")
+    private String jwksUri;
+    private final Environment environment;
+    private final ResourceLoader resourceLoader;
+
+    public SecurityConfig(Environment environment, ResourceLoader resourceLoader) {
+        this.environment = environment;
+        this.resourceLoader = resourceLoader;
+    }
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
+        http.sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())));
+        return http.build();
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(jwksUri).build();
+    }
+
+    private ServletPolicyEnforcerFilter createPolicyEnforcerFilter() {
+        return new ServletPolicyEnforcerFilter(new ConfigurationResolver() {
+            @Override
+            public PolicyEnforcerConfig resolve(HttpRequest httpRequest) {
+                try {
+                    Resource resource = resourceLoader.getResource("classpath:policy-enforcer.json");
+                    String rawJson = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+
+                    String resolvedJson = environment.resolvePlaceholders(rawJson);
+
+                    return JsonSerialization.readValue(resolvedJson, PolicyEnforcerConfig.class);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to load policy-enforcer.json", e);
+                }
+            }
+        });
+    }
+}
