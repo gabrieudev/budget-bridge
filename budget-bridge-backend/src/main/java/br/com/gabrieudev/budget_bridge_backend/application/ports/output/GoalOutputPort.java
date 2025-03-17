@@ -1,6 +1,5 @@
 package br.com.gabrieudev.budget_bridge_backend.application.ports.output;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,11 +17,11 @@ public interface GoalOutputPort {
             Integer page,
             Integer size);
 
-    boolean deposit(UUID id, BigDecimal amount);
-
     Optional<Double> progressPercentage(UUID id);
 
-    Optional<Goal> update(Goal goal, UUID goalId);
+    Optional<Goal> update(Goal goal);
     
     boolean delete(UUID id);
+
+    Optional<Goal> findById(UUID id);
 }
