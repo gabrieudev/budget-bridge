@@ -24,21 +24,21 @@ public class CategoryService implements CategoryInputPort {
         category.setUserId(userId);
 
         if (categoryOutputPort.existsByUserIdAndName(userId, category.getName())) {
-            throw new BusinessRuleException("Category already exists");
+            throw new BusinessRuleException("Categoria já existe");
         }
 
         return categoryOutputPort.create(category)
-                .orElseThrow(() -> new InternalErrorException("Error creating category"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao criar categoria"));
     }
 
     @Override
     public void delete(UUID id, String userId) {
         if (transactionOutputPort.existsByCategoryId(id)) {
-            throw new BusinessRuleException("Category has transactions");
+            throw new BusinessRuleException("Categoria tem transações");
         }
 
         if (!categoryOutputPort.delete(id)) {
-            throw new InternalErrorException("Error deleting category");
+            throw new InternalErrorException("Erro ao deletar categoria");
         }
     }
 
@@ -47,3 +47,4 @@ public class CategoryService implements CategoryInputPort {
         return categoryOutputPort.findAll(userId, page, size);
     }
 }
+

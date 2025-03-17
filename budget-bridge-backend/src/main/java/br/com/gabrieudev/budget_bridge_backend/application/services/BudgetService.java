@@ -22,11 +22,11 @@ public class BudgetService implements BudgetInputPort {
         budget.setUserId(userId);
 
         if (budget.getEndDate().isBefore(budget.getStartDate())) {
-            throw new BusinessRuleException("Start date must be before end date");
+            throw new BusinessRuleException("A data de início deve ser antes da data de término");
         }
 
         return budgetOutputPort.create(budget)
-                .orElseThrow(() -> new InternalErrorException("Error creating budget"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao criar orçamento"));
     }
 
     @Override
@@ -37,27 +37,28 @@ public class BudgetService implements BudgetInputPort {
     @Override
     public void delete(UUID id, String userId) {
         Budget budget = budgetOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Budget not found"));
+                .orElseThrow(() -> new InternalErrorException("Orçamento não encontrado"));
 
         if (!budget.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't delete this budget");
+            throw new UnauthorizedException("Você não pode deletar este orçamento");
         }
 
         if (!budgetOutputPort.delete(id)) {
-            throw new InternalErrorException("Error deleting budget");
+            throw new InternalErrorException("Erro ao deletar orçamento");
         }
     }
 
     @Override
     public Double progressPercentage(UUID id, String userId) {
         Budget budget = budgetOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Budget not found"));
+                .orElseThrow(() -> new InternalErrorException("Orçamento não encontrado"));
 
         if (!budget.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't access this budget");
+            throw new UnauthorizedException("Você não pode acessar este orçamento");
         }
 
         return budgetOutputPort.progressPercentage(id)
-                .orElseThrow(() -> new InternalErrorException("Budget not found"));
+                .orElseThrow(() -> new InternalErrorException("Orçamento não encontrado"));
     }
 }
+

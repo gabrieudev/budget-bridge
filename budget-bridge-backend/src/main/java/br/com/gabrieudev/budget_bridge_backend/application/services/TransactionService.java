@@ -29,36 +29,36 @@ public class TransactionService implements TransactionInputPort {
         transaction.setUpdatedAt(LocalDateTime.now());
 
         Account account = accountOutputPort.findById(transaction.getAccount().getId())
-                .orElseThrow(() -> new InternalErrorException("Account not found"));
+                .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
 
         account.setBalance(account.getBalance().subtract(transaction.getAmount()));
 
         accountOutputPort.update(account)
-                .orElseThrow(() -> new InternalErrorException("Error updating account"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao atualizar conta"));
 
         return transactionOutputPort.create(transaction)
-                .orElseThrow(() -> new InternalErrorException("Error creating transaction"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao criar transação"));
     }
 
     @Override
     public void delete(UUID id, String userId) {
         Transaction transaction = transactionOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Transaction not found"));
+                .orElseThrow(() -> new InternalErrorException("Transação não encontrada"));
 
         if (!transaction.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't delete this transaction");
+            throw new UnauthorizedException("Você não pode deletar esta transação");
         }
 
         Account account = accountOutputPort.findById(transaction.getAccount().getId())
-                .orElseThrow(() -> new InternalErrorException("Account not found"));
+                .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
 
         account.setBalance(account.getBalance().add(transaction.getAmount()));
 
         accountOutputPort.update(account)
-                .orElseThrow(() -> new InternalErrorException("Error updating account"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao atualizar conta"));
 
         if (!transactionOutputPort.delete(id)) {
-            throw new InternalErrorException("Error deleting transaction");
+            throw new InternalErrorException("Erro ao deletar transação");
         }
     }
 
@@ -71,10 +71,10 @@ public class TransactionService implements TransactionInputPort {
     @Override
     public Transaction findById(UUID id, String userId) {
         Transaction transaction = transactionOutputPort.findById(id)
-                .orElseThrow(() -> new NotFoundException("Transaction not found"));
+                .orElseThrow(() -> new NotFoundException("Transação não encontrada"));
 
         if (!transaction.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't access this transaction");
+            throw new UnauthorizedException("Você não pode acessar esta transação");
         }
 
         return transaction;
@@ -83,16 +83,17 @@ public class TransactionService implements TransactionInputPort {
     @Override
     public Transaction update(Transaction transaction, UUID transactionId, String userId) {
         Transaction transactionToUpdate = transactionOutputPort.findById(transactionId)
-                .orElseThrow(() -> new NotFoundException("Transaction not found"));
+                .orElseThrow(() -> new NotFoundException("Transação não encontrada"));
 
         if (!transactionToUpdate.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't update this transaction");
+            throw new UnauthorizedException("Você não pode atualizar esta transação");
         }
 
         transaction.setId(transactionId);
         transaction.setUpdatedAt(LocalDateTime.now());
 
         return transactionOutputPort.update(transaction)
-                .orElseThrow(() -> new InternalErrorException("Error updating transaction"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao atualizar transação"));
     }
 }
+

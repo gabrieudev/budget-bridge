@@ -29,26 +29,26 @@ public class AccountService implements AccountInputPort {
         account.setUserId(userId);
 
         return accountOutputPort.create(account)
-                .orElseThrow(() -> new InternalErrorException("Error creating account"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao criar conta"));
     }
 
     @Override
     public void delete(UUID id, String userId) {
         Account account = accountOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Account not found"));
+                .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
 
         if (!account.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't delete this account");
+            throw new UnauthorizedException("Você não pode deletar esta conta");
         }
 
         if (account.getBalance().compareTo(BigDecimal.ZERO) != 0) {
-            throw new BusinessRuleException("Account has balance");
+            throw new BusinessRuleException("Conta possui saldo");
         }
 
         account.setActive(false);
 
         accountOutputPort.update(account)
-                .orElseThrow(() -> new InternalErrorException("Error deleting account"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao deletar conta"));
     }
 
     @Override
@@ -59,10 +59,10 @@ public class AccountService implements AccountInputPort {
     @Override
     public Account findById(UUID id, String userId) {
         Account account = accountOutputPort.findById(id)
-                .orElseThrow(() -> new NotFoundException("Account not found"));
+                .orElseThrow(() -> new NotFoundException("Conta não encontrada"));
 
         if (!account.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't access this account");
+            throw new UnauthorizedException("Você não pode acessar esta conta");
         }
 
         return account;
@@ -74,13 +74,14 @@ public class AccountService implements AccountInputPort {
         account.setUpdatedAt(LocalDateTime.now());
 
         Account accountToUpdate = accountOutputPort.findById(accountId)
-                .orElseThrow(() -> new InternalErrorException("Account not found"));
+                .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
 
         if (!accountToUpdate.getUserId().equals(userId)) {
-            throw new UnauthorizedException("You can't update this account");
+            throw new UnauthorizedException("Você não pode atualizar esta conta");
         }
 
         return accountOutputPort.update(account)
-                .orElseThrow(() -> new InternalErrorException("Error updating account"));
+                .orElseThrow(() -> new InternalErrorException("Erro ao atualizar conta"));
     }
 }
+
