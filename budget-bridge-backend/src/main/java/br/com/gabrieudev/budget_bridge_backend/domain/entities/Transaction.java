@@ -17,6 +17,7 @@ public class Transaction {
     private String description;
     private LocalDateTime transactionDate;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     
     public UUID getId() {
         return id;
@@ -78,9 +79,16 @@ public class Transaction {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
     
     public Transaction(UUID id, String userId, Account account, Goal goal, TransactionTypeEnum type, Category category,
-            BigDecimal amount, String description, LocalDateTime transactionDate, LocalDateTime createdAt) {
+            BigDecimal amount, String description, LocalDateTime transactionDate, LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.account = account;
@@ -91,6 +99,7 @@ public class Transaction {
         this.description = description;
         this.transactionDate = transactionDate;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
     
     public Transaction() {
