@@ -25,4 +25,6 @@ public interface TransactionOutputPort {
     Optional<Transaction> update(Transaction transaction);
 
     boolean delete(UUID id);
+
+    boolean existsByCategoryId(UUID categoryId);
 }

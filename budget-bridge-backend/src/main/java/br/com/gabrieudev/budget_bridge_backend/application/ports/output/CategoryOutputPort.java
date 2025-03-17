@@ -15,4 +15,6 @@ public interface CategoryOutputPort {
             Integer size);
 
     boolean delete(UUID id);
+
+    boolean existsByUserIdAndName(String userId, String name);
 }
