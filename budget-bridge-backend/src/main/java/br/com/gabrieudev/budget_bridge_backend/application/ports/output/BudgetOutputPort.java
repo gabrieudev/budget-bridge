@@ -14,4 +14,6 @@ public interface BudgetOutputPort {
     Optional<Double> progressPercentage(UUID id);
 
     boolean delete(UUID id);
+
+    Optional<Budget> findById(UUID id);
 }
