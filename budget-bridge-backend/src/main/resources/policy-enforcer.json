@@ -1,0 +1,19 @@
+{
+  "realm": "${kc.realm}",
+  "auth-server-url": "${kc.base-url}",
+  "resource": "${kc.client-id}",
+  "credentials": {
+    "secret": "${kc.client-secret}"
+  },
+  "http-method-as-scope": true,
+  "paths": [
+    {
+      "path": "/swagger-ui/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v3/api-docs/*",
+      "enforcement-mode": "DISABLED"
+    }
+  ]
+}
