@@ -8,7 +8,7 @@ import java.util.UUID;
 import br.com.gabrieudev.budget_bridge_backend.domain.entities.Transaction;
 
 public interface TransactionOutputPort {
-    Optional<Transaction> create(Transaction transaction, String userId);
+    Optional<Transaction> create(Transaction transaction);
 
     List<Transaction> findAll(
             String userId,
@@ -20,9 +20,9 @@ public interface TransactionOutputPort {
             Integer page,
             Integer size);
 
-    Optional<Transaction> findById(UUID id, String userId);
+    Optional<Transaction> findById(UUID id);
 
-    Optional<Transaction> update(Transaction transaction, UUID transactionId, String userId);
+    Optional<Transaction> update(Transaction transaction);
 
-    boolean delete(UUID id, String userId);
+    boolean delete(UUID id);
 }

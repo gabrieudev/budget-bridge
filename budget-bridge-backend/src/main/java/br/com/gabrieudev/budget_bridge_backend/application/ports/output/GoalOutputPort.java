@@ -8,7 +8,7 @@ import java.util.UUID;
 import br.com.gabrieudev.budget_bridge_backend.domain.entities.Goal;
 
 public interface GoalOutputPort {
-    Optional<Goal> create(Goal goal, String userId);
+    Optional<Goal> create(Goal goal);
 
     List<Goal> findAll(
             String userId,
@@ -18,11 +18,11 @@ public interface GoalOutputPort {
             Integer page,
             Integer size);
 
-    boolean deposit(UUID id, String userId, BigDecimal amount);
+    boolean deposit(UUID id, BigDecimal amount);
 
-    Optional<Double> progressPercentage(UUID id, String userId);
+    Optional<Double> progressPercentage(UUID id);
 
-    Optional<Goal> update(Goal goal, UUID goalId, String userId);
+    Optional<Goal> update(Goal goal, UUID goalId);
     
-    boolean delete(UUID id, String userId);
+    boolean delete(UUID id);
 }

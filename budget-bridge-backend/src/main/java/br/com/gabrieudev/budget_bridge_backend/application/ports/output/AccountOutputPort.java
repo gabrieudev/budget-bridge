@@ -7,7 +7,7 @@ import java.util.UUID;
 import br.com.gabrieudev.budget_bridge_backend.domain.entities.Account;
 
 public interface AccountOutputPort {
-    Optional<Account> create(Account account, String userId);
+    Optional<Account> create(Account account);
 
     List<Account> findAll(
             String userId,
@@ -17,9 +17,7 @@ public interface AccountOutputPort {
             Integer page,
             Integer size);
 
-    Optional<Account> findById(UUID id, String userId);
+    Optional<Account> findById(UUID id);
 
-    Optional<Account> update(Account account, UUID accountId, String userId);
-
-    boolean delete(UUID id, String userId);
+    Optional<Account> update(Account account);
 }
