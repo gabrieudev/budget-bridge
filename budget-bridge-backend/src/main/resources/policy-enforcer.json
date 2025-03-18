@@ -1,6 +1,6 @@
 {
   "realm": "${kc.realm}",
-  "auth-server-url": "${kc.base-url}",
+  "auth-server-url": "${kc.url}",
   "resource": "${kc.client-id}",
   "credentials": {
     "secret": "${kc.client-secret}"
@@ -13,6 +13,10 @@
     },
     {
       "path": "/v3/api-docs/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/actuator/health",
       "enforcement-mode": "DISABLED"
     }
   ]

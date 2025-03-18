@@ -85,7 +85,12 @@ public class TransactionRepositoryAdapter implements TransactionOutputPort {
     @Override
     public Optional<Transaction> update(Transaction transaction) {
         try {
-            JpaTransactionEntity jpaTransactionEntity = JpaTransactionEntity.fromDomain(transaction);
+            JpaTransactionEntity jpaTransactionEntity = jpaTransactionRepository.findById(transaction.getId())
+                    .orElse(null);
+
+            if (jpaTransactionEntity == null) {
+                return Optional.empty();
+            }
 
             jpaTransactionEntity.update(transaction);
 

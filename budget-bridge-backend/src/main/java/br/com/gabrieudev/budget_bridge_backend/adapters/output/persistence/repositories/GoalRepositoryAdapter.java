@@ -62,7 +62,12 @@ public class GoalRepositoryAdapter implements GoalOutputPort {
     @Override
     public Optional<Goal> update(Goal goal) {
         try {
-            JpaGoalEntity jpaGoalEntity = JpaGoalEntity.fromDomain(goal);
+            JpaGoalEntity jpaGoalEntity = jpaGoalRepository.findById(goal.getId())
+                    .orElse(null);
+
+            if (jpaGoalEntity == null) {
+                return Optional.empty();
+            }
 
             jpaGoalEntity.update(goal);
 

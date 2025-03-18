@@ -25,6 +25,6 @@ public class SwaggerConfig {
                                 .externalDocs(new ExternalDocumentation()
                                                 .description("Repositório GitHub")
                                                 .url("https://github.com/gabrieudev/budget-bridge"))
-                                .addServersItem(new Server().url(apiUrl).description("Servidor principal"));
+                                .addServersItem(new Server().url(apiUrl + "/api/v1").description("Servidor principal"));
         }
 }

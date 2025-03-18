@@ -49,14 +49,19 @@ public class AccountRepositoryAdapter implements AccountOutputPort {
 
     @Override
     public Optional<Account> findById(UUID id) {
-        return jpaAccountRepository.findById(id)
+        return jpaAccountRepository.findByIdAndIsActiveIsTrue(id)
                 .map(JpaAccountEntity::toDomain);
     }
 
     @Override
     public Optional<Account> update(Account account) {
         try {
-            JpaAccountEntity jpaAccountEntity = JpaAccountEntity.fromDomain(account);
+            JpaAccountEntity jpaAccountEntity = jpaAccountRepository.findById(account.getId())
+                    .orElse(null);
+
+            if (jpaAccountEntity == null) {
+                return Optional.empty();
+            }
 
             jpaAccountEntity.update(account);
 

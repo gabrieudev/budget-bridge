@@ -1,5 +1,6 @@
 package br.com.gabrieudev.budget_bridge_backend.adapters.output.persistence.repositories.jpa;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -38,4 +39,7 @@ public interface JpaAccountRepository extends JpaRepository<JpaAccountEntity, UU
             Pageable pageable);
 
     boolean existsByUserIdAndName(String userId, String name);
+
+    Optional<JpaAccountEntity> findByIdAndIsActiveIsTrue(UUID id);
+
 }

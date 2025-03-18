@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @SecurityScheme(
 		name = "Keycloak"
-		, openIdConnectUrl = "${kc.base-url}/realms/${kc.realm}/.well-known/openid-configuration"
+		, openIdConnectUrl = "${kc.url}/realms/${kc.realm}/.well-known/openid-configuration"
 		, scheme = "bearer"
 		, type = SecuritySchemeType.OPENIDCONNECT
 		, in = SecuritySchemeIn.HEADER
