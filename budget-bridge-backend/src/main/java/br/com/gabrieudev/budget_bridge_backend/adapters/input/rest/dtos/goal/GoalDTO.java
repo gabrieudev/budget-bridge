@@ -91,7 +91,7 @@ public class GoalDTO {
         return new ModelMapper().map(goal, GoalDTO.class);
     }
 
-    public static Goal toDomain(GoalDTO goalDTO) {
-        return new ModelMapper().map(goalDTO, Goal.class);
+    public Goal toDomain() {
+        return new ModelMapper().map(GoalDTO.class, Goal.class);
     }
 }

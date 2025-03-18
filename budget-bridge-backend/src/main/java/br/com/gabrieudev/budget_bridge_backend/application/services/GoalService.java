@@ -31,9 +31,9 @@ public class GoalService implements GoalInputPort {
         goal.setUpdatedAt(LocalDateTime.now());
         goal.setStatus(GoalStatusEnum.PENDENTE);
 
-        if (goal.getAccount() == null) {
+        if (goal.getAccount() != null) {
             Account account = accountOutputPort.findById(goal.getAccount().getId())
-                    .orElseThrow(() -> new InternalErrorException("Conta nao encontrada"));
+                    .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
 
             goal.setCurrentAmount(account.getBalance());
         }
@@ -49,10 +49,10 @@ public class GoalService implements GoalInputPort {
     @Override
     public void delete(UUID id, String userId) {
         Goal goal = goalOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Meta nao encontrada"));
+                .orElseThrow(() -> new InternalErrorException("Meta não encontrada"));
 
         if (!goal.getUserId().equals(userId)) {
-            throw new UnauthorizedException("Vocé nao pode deletar esta meta");
+            throw new UnauthorizedException("Vocé não pode deletar esta meta");
         }
 
         if (goal.getStatus().equals(GoalStatusEnum.CONCLUIDA)) {

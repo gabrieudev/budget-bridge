@@ -27,7 +27,7 @@ public class CreateCategoryDTO {
     @NotBlank(message = "A cor da categoria é obrigatória")
     private String color;
 
-    public static Category toDomain(CategoryDTO categoryDTO) {
-        return new ModelMapper().map(categoryDTO, Category.class);
+    public Category toDomain() {
+        return new ModelMapper().map(CreateCategoryDTO.class, Category.class);
     }
 }

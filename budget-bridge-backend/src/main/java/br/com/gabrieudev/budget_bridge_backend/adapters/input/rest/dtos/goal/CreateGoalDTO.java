@@ -65,7 +65,7 @@ public class CreateGoalDTO {
     @Future(message = "A data de término da meta deve ser futura")
     private LocalDateTime deadline;
 
-    public static Goal toDomain(GoalDTO goalDTO) {
-        return new ModelMapper().map(goalDTO, Goal.class);
+    public Goal toDomain() {
+        return new ModelMapper().map(CreateGoalDTO.class, Goal.class);
     }
 }

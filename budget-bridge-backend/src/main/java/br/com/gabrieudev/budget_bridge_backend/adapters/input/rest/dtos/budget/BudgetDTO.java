@@ -59,7 +59,7 @@ public class BudgetDTO {
         return new ModelMapper().map(budget, BudgetDTO.class);
     }
 
-    public static Budget toDomain(BudgetDTO budgetDTO) {
-        return new ModelMapper().map(budgetDTO, Budget.class);
+    public Budget toDomain() {
+        return new ModelMapper().map(BudgetDTO.class, Budget.class);
     }
 }

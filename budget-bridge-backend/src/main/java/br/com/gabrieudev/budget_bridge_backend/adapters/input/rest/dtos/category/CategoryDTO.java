@@ -42,7 +42,7 @@ public class CategoryDTO {
         return new ModelMapper().map(category, CategoryDTO.class);
     }
 
-    public static Category toDomain(CategoryDTO categoryDTO) {
-        return new ModelMapper().map(categoryDTO, Category.class);
+    public Category toDomain() {
+        return new ModelMapper().map(CategoryDTO.class, Category.class);
     }
 }

@@ -51,7 +51,7 @@ public class CreateBudgetDTO {
     @NotNull(message = "A data de término do orçamento é obrigatória")
     private LocalDateTime endDate;
 
-    public static Budget toDomain(BudgetDTO budgetDTO) {
-        return new ModelMapper().map(budgetDTO, Budget.class);
+    public Budget toDomain() {
+        return new ModelMapper().map(CreateBudgetDTO.class, Budget.class);
     }
 }
