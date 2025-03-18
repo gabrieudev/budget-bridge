@@ -39,7 +39,7 @@ public class JpaGoalEntity {
     private String userId;
     
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_id")
     private JpaAccountEntity account;
     
     @Column(name = "title", nullable = false)

@@ -26,14 +26,17 @@ public class GoalService implements GoalInputPort {
 
     @Override
     public Goal create(Goal goal, String userId) {
-        Account account = accountOutputPort.findById(goal.getAccount().getId())
-                .orElseThrow(() -> new InternalErrorException("Conta não encontrada"));
-
         goal.setUserId(userId);
         goal.setCreatedAt(LocalDateTime.now());
         goal.setUpdatedAt(LocalDateTime.now());
-        goal.setCurrentAmount(account.getBalance());
         goal.setStatus(GoalStatusEnum.PENDENTE);
+
+        if (goal.getAccount() == null) {
+            Account account = accountOutputPort.findById(goal.getAccount().getId())
+                    .orElseThrow(() -> new InternalErrorException("Conta nao encontrada"));
+
+            goal.setCurrentAmount(account.getBalance());
+        }
 
         if (goal.getTargetAmount().compareTo(goal.getCurrentAmount()) < 0) {
             throw new BusinessRuleException("O valor alvo deve ser maior que o valor atual");
