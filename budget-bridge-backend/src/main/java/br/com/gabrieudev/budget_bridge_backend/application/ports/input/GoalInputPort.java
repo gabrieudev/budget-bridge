@@ -19,8 +19,6 @@ public interface GoalInputPort {
 
     void deposit(UUID id, String userId, BigDecimal amount);
 
-    Double progressPercentage(UUID id, String userId);
-
     Goal update(Goal goal, UUID goalId, String userId);
     
     void delete(UUID id, String userId);

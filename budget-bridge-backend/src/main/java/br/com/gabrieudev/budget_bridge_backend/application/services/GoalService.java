@@ -94,19 +94,6 @@ public class GoalService implements GoalInputPort {
     }
 
     @Override
-    public Double progressPercentage(UUID id, String userId) {
-        Goal goal = goalOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Meta não encontrada"));
-
-        if (!goal.getUserId().equals(userId)) {
-            throw new UnauthorizedException("Vocé não pode acessar esta meta");
-        }
-
-        return goalOutputPort.progressPercentage(id)
-                .orElseThrow(() -> new InternalErrorException("Erro ao calcular progresso"));
-    }
-
-    @Override
     public Goal update(Goal goal, UUID goalId, String userId) {
         goal.setId(goalId);
         goal.setUpdatedAt(LocalDateTime.now());

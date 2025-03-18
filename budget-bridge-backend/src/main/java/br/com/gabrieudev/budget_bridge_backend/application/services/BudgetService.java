@@ -30,8 +30,8 @@ public class BudgetService implements BudgetInputPort {
     }
 
     @Override
-    public List<Budget> current(String userId) {
-        return budgetOutputPort.current(userId);
+    public List<Budget> getCurrent(String userId, Integer page, Integer size) {
+        return budgetOutputPort.getCurrent(userId, page, size);
     }
 
     @Override
@@ -46,19 +46,6 @@ public class BudgetService implements BudgetInputPort {
         if (!budgetOutputPort.delete(id)) {
             throw new InternalErrorException("Erro ao deletar orçamento");
         }
-    }
-
-    @Override
-    public Double progressPercentage(UUID id, String userId) {
-        Budget budget = budgetOutputPort.findById(id)
-                .orElseThrow(() -> new InternalErrorException("Orçamento não encontrado"));
-
-        if (!budget.getUserId().equals(userId)) {
-            throw new UnauthorizedException("Você não pode acessar este orçamento");
-        }
-
-        return budgetOutputPort.progressPercentage(id)
-                .orElseThrow(() -> new InternalErrorException("Orçamento não encontrado"));
     }
 }
 

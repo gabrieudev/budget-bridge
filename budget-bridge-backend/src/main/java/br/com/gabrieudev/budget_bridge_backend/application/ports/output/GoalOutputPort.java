@@ -17,8 +17,6 @@ public interface GoalOutputPort {
             Integer page,
             Integer size);
 
-    Optional<Double> progressPercentage(UUID id);
-
     Optional<Goal> update(Goal goal);
     
     boolean delete(UUID id);

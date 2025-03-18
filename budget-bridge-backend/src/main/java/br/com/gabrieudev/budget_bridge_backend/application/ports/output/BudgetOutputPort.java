@@ -9,9 +9,7 @@ import br.com.gabrieudev.budget_bridge_backend.domain.entities.Budget;
 public interface BudgetOutputPort {
     Optional<Budget> create(Budget budget);
 
-    List<Budget> current(String userId);
-
-    Optional<Double> progressPercentage(UUID id);
+    List<Budget> getCurrent(String userId, Integer page, Integer size);
 
     boolean delete(UUID id);
 
