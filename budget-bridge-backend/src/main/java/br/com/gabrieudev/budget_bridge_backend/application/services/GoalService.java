@@ -78,6 +78,10 @@ public class GoalService implements GoalInputPort {
             throw new BusinessRuleException("O valor alvo deve ser maior que o valor atual");
         }
 
+        if (amount.add(goal.getCurrentAmount()).compareTo(goal.getTargetAmount()) == 0) {
+            goal.setStatus(GoalStatusEnum.CONCLUIDA);
+        }
+
         goal.setCurrentAmount(goal.getCurrentAmount().add(amount));
 
         goalOutputPort.update(goal)
