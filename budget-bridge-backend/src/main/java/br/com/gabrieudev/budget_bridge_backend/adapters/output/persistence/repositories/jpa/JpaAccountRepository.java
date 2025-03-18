@@ -25,6 +25,8 @@ public interface JpaAccountRepository extends JpaRepository<JpaAccountEntity, UU
                     (type IS NULL OR type = :type)
                 AND
                     (currency IS NULL OR currency = :currency)
+                AND
+                    a.is_active = true
                 """,
         nativeQuery = true
     )
