@@ -12,10 +12,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gabrieudev.budget_bridge_backend.adapters.input.rest.dtos.ApiResponseDTO;
@@ -30,12 +33,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RestController
 @CrossOrigin
 @SecurityRequirement(name = "Keycloak")
@@ -87,8 +89,12 @@ public class AccountController {
         @RequestBody
         CreateAccountDTO createAccountDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("POST /api/v1/accounts | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Account createdAccount = accountService.create(createAccountDTO.toDomain(), userId);
@@ -154,8 +160,12 @@ public class AccountController {
         )
         @RequestParam(required = true) Integer size,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/accounts | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         List<AccountDTO> accounts = accountService.findAll(userId, name, type, currency, page, size)
@@ -210,8 +220,12 @@ public class AccountController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/accounts/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Account account = accountService.findById(id, userId);
@@ -265,8 +279,12 @@ public class AccountController {
         @RequestBody
         UpdateAccountDTO updateAccountDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("PUT /api/v1/accounts/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Account updatedAccount = accountService.update(updateAccountDTO.toDomain(), id, userId);
@@ -309,8 +327,12 @@ public class AccountController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("DELETE /api/v1/accounts/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         accountService.delete(id, userId);

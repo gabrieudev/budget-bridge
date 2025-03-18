@@ -34,8 +34,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @SecurityRequirement(name = "Keycloak")
@@ -81,8 +84,12 @@ public class TransactionController {
         @RequestBody
         CreateTransactionDTO createTransactionDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("POST /api/v1/transactions | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Transaction createdTransaction = transactionService.create(createTransactionDTO.toDomain(), userId);
@@ -125,8 +132,12 @@ public class TransactionController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("DELETE /api/v1/transactions/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         transactionService.delete(id, userId);
@@ -198,8 +209,12 @@ public class TransactionController {
         )
         @RequestParam(required = true) Integer size,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/transactions | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         List<TransactionDTO> transactions = transactionService.findAll(userId, accountId, type, categoryId, startDate, endDate, page, size)
@@ -254,8 +269,12 @@ public class TransactionController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/transactions/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Transaction transaction = transactionService.findById(id, userId);
@@ -316,8 +335,12 @@ public class TransactionController {
         @RequestBody
         UpdateTransactionDTO updateTransactionDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("PUT /api/v1/transactions/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Transaction updatedTransaction = transactionService.update(updateTransactionDTO.toDomain(), id, userId);

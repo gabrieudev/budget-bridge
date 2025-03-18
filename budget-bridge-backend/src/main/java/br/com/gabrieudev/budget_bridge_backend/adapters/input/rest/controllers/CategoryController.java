@@ -31,8 +31,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @SecurityRequirement(name = "Keycloak")
@@ -85,8 +88,12 @@ public class CategoryController {
         @RequestBody
         CreateCategoryDTO createCategoryDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("POST /api/v1/categories | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Category createdCategory = categoryService.create(createCategoryDTO.toDomain(), userId);
@@ -129,8 +136,12 @@ public class CategoryController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("DELETE /api/v1/categories/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         categoryService.delete(id, userId);
@@ -179,8 +190,12 @@ public class CategoryController {
         )
         @RequestParam(required = true) Integer size,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/categories | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         List<CategoryDTO> categories = categoryService.findAll(userId, page, size)

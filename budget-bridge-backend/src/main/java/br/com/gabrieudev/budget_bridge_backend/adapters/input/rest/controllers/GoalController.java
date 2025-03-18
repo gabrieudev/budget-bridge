@@ -34,8 +34,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @SecurityRequirement(name = "Keycloak")
@@ -87,8 +90,12 @@ public class GoalController {
         @RequestBody
         CreateGoalDTO createGoalDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("POST /api/v1/goals | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Goal createdGoal = goalService.create(createGoalDTO.toDomain(), userId);
@@ -138,8 +145,12 @@ public class GoalController {
         )
         @PathVariable UUID id,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("DELETE /api/v1/goals/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         goalService.delete(id, userId);
@@ -200,8 +211,12 @@ public class GoalController {
         @RequestBody
         GoalDepositDTO goalDepositDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("POST /api/v1/goals/{id}/deposit | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         goalService.deposit(id, userId, goalDepositDTO.getAmount());
@@ -268,8 +283,12 @@ public class GoalController {
         )
         @RequestParam(required = true) Integer size,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("GET /api/v1/goals | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         List<GoalDTO> goals = goalService.findAll(userId, accountId, type, status, page, size)
@@ -328,8 +347,12 @@ public class GoalController {
         @RequestBody
         UpdateGoalDTO updateGoalDTO,
 
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal Jwt jwt,
+
+        HttpServletRequest request
     ) {
+        log.info("PUT /api/v1/goals/{id} | Client: {}", request.getRemoteAddr());
+
         String userId = jwt.getSubject();
 
         Goal updatedGoal = goalService.update(updateGoalDTO.toDomain(), id, userId);
