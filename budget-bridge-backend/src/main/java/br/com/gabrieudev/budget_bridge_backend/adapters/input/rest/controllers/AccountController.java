@@ -66,6 +66,13 @@ public class AccountController {
                 )
             ),
             @ApiResponse(
+                responseCode = "422",
+                description = "Dados inválidos",
+                content = @Content(
+                    schema = @Schema(implementation = ApiResponseDTO.class)
+                )
+            ),
+            @ApiResponse(
                 responseCode = "500",
                 description = "Erro interno do servidor",
                 content = @Content(
@@ -226,6 +233,13 @@ public class AccountController {
             @ApiResponse(
                 responseCode = "401",
                 description = "Não autorizado",
+                content = @Content(
+                    schema = @Schema(implementation = ApiResponseDTO.class)
+                )
+            ),
+            @ApiResponse(
+                responseCode = "422",
+                description = "Dados inválidos",
                 content = @Content(
                     schema = @Schema(implementation = ApiResponseDTO.class)
                 )

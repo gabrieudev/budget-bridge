@@ -64,7 +64,7 @@ public class AccountDTO {
         description = "Se a conta está ativa",
         example = "true"
     )
-    private boolean isActive;
+    private Boolean isActive;
     
     @Schema(
         description = "Data de criação da conta",

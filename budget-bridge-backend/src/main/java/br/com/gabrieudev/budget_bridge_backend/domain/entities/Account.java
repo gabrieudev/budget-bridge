@@ -15,7 +15,7 @@ public class Account {
     private AccountCurrencyEnum currency;
     private BigDecimal balance;
     private String color;
-    private boolean isActive;
+    private Boolean isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -61,10 +61,10 @@ public class Account {
     public void setColor(String color) {
         this.color = color;
     }
-    public boolean isActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
-    public void setActive(boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
     public LocalDateTime getCreatedAt() {

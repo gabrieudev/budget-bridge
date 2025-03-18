@@ -22,7 +22,7 @@ public class AccountService implements AccountInputPort {
 
     @Override
     public Account create(Account account, String userId) {
-        account.setActive(true);
+        account.setIsActive(true);
         account.setBalance(BigDecimal.ZERO);
         account.setCreatedAt(LocalDateTime.now());
         account.setUpdatedAt(LocalDateTime.now());
@@ -49,7 +49,7 @@ public class AccountService implements AccountInputPort {
             throw new BusinessRuleException("Conta possui saldo");
         }
 
-        account.setActive(false);
+        account.setIsActive(false);
 
         accountOutputPort.update(account)
                 .orElseThrow(() -> new InternalErrorException("Erro ao deletar conta"));

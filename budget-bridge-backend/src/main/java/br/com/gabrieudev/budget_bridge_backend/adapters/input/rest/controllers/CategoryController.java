@@ -64,6 +64,13 @@ public class CategoryController {
                 )
             ),
             @ApiResponse(
+                responseCode = "422",
+                description = "Dados inválidos",
+                content = @Content(
+                    schema = @Schema(implementation = ApiResponseDTO.class)
+                )
+            ),
+            @ApiResponse(
                 responseCode = "500",
                 description = "Erro interno do servidor",
                 content = @Content(

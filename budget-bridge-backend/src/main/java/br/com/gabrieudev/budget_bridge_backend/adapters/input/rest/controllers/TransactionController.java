@@ -60,6 +60,13 @@ public class TransactionController {
                 description = "Transação criada com sucesso"
             ),
             @ApiResponse(
+                responseCode = "422",
+                description = "Dados inválidos",
+                content = @Content(
+                    schema = @Schema(implementation = ApiResponseDTO.class)
+                )
+            ),
+            @ApiResponse(
                 responseCode = "500",
                 description = "Erro interno do servidor",
                 content = @Content(
@@ -277,6 +284,13 @@ public class TransactionController {
             @ApiResponse(
                 responseCode = "404",
                 description = "Transação nao encontrada",
+                content = @Content(
+                    schema = @Schema(implementation = ApiResponseDTO.class)
+                )
+            ),
+            @ApiResponse(
+                responseCode = "422",
+                description = "Dados inválidos",
                 content = @Content(
                     schema = @Schema(implementation = ApiResponseDTO.class)
                 )

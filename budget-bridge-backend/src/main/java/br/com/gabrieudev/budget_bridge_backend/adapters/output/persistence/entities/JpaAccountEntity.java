@@ -54,7 +54,7 @@ public class JpaAccountEntity {
     private String color;
 
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private Boolean isActive;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
