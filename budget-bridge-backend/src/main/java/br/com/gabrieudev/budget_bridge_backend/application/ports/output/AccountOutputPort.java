@@ -20,4 +20,6 @@ public interface AccountOutputPort {
     Optional<Account> findById(UUID id);
 
     Optional<Account> update(Account account);
+
+    boolean existsByUserIdAndName(String userId, String name);
 }

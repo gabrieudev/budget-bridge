@@ -28,6 +28,10 @@ public class AccountService implements AccountInputPort {
         account.setUpdatedAt(LocalDateTime.now());
         account.setUserId(userId);
 
+        if (accountOutputPort.existsByUserIdAndName(userId, account.getName())) {
+            throw new BusinessRuleException("Já existe uma conta com esse nome");
+        }
+
         return accountOutputPort.create(account)
                 .orElseThrow(() -> new InternalErrorException("Erro ao criar conta"));
     }
