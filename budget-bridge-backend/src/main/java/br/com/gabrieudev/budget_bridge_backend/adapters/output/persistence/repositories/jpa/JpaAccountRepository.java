@@ -18,19 +18,17 @@ public interface JpaAccountRepository extends JpaRepository<JpaAccountEntity, UU
         value = """
                 SELECT a.*
                 FROM account a
-                WHERE 
-                    a.user_id = :userId
-                AND
-                    (name IS NULL OR name LIKE CONCAT('%', :name, '%'))
-                AND
-                    (type IS NULL OR type = :type)
-                AND
-                    (currency IS NULL OR currency = :currency)
-                AND
+                WHERE a.user_id = :userId
+                AND 
+                    (:name IS NULL OR a.name LIKE CONCAT('%', :name, '%'))
+                AND 
+                    (:type IS NULL OR a.type = :type)
+                AND 
+                    (:currency IS NULL OR a.currency = :currency)
+                AND 
                     a.is_active = true
                 """,
-        nativeQuery = true
-    )
+        nativeQuery = true)
     Page<JpaAccountEntity> findAllByCriteria(
             @Param("userId") String userId,
             @Param("name") String name,
@@ -43,3 +41,4 @@ public interface JpaAccountRepository extends JpaRepository<JpaAccountEntity, UU
     Optional<JpaAccountEntity> findByIdAndIsActiveIsTrue(UUID id);
 
 }
+
