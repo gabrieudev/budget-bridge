@@ -22,13 +22,17 @@ public class CorsConfig {
     CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        
+
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList(apiUrl, frontendUrl, kcUrl));
+        config.setAllowedOriginPatterns(Arrays.asList(
+                frontendUrl,
+                apiUrl,
+                kcUrl));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setExposedHeaders(Arrays.asList("Authorization", "Content-Disposition"));
         config.setMaxAge(3600L);
-        
+
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
