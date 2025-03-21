@@ -73,11 +73,20 @@ export const api = {
     type?: string | null;
     currency?: string | null;
     color?: string | null;
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }): Promise<ApiResponse<PaginatedResponse<Account>>> => {
+    const params = new URLSearchParams();
+
+    if (name) params.append("name", name);
+    if (type) params.append("type", type);
+    if (currency) params.append("currency", currency);
+    if (color) params.append("color", color);
+    params.append("page", page.toString());
+    params.append("size", size.toString());
+
     return fetchWithAuth<PaginatedResponse<Account>>(
-      `/accounts?name=${name}&type=${type}&currency=${currency}&color=${color}&page=${page}&size=${size}`
+      `/accounts?${params.toString()}`
     );
   },
 
@@ -125,11 +134,21 @@ export const api = {
     type?: string | null;
     startDate?: Date | null;
     endDate?: Date | null;
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }): Promise<ApiResponse<PaginatedResponse<Transaction>>> => {
+    const params = new URLSearchParams();
+
+    if (accountId !== null) params.append("account", accountId);
+    if (categoryId !== null) params.append("categoryId", categoryId);
+    if (type !== null) params.append("type", type);
+    if (startDate !== null) params.append("startDate", startDate.toISOString());
+    if (endDate !== null) params.append("endDate", endDate.toISOString());
+    params.append("page", page.toString());
+    params.append("size", size.toString());
+
     return fetchWithAuth<PaginatedResponse<Transaction>>(
-      `/transactions?account=${accountId}&categoryId=${categoryId}&type=${type}&startDate=${startDate}&endDate=${endDate}&page=${page}&size=${size}`
+      `/transactions?${params.toString()}`
     );
   },
 
@@ -170,11 +189,19 @@ export const api = {
     accountId?: string | null;
     type?: string | null;
     status?: string | null;
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }): Promise<ApiResponse<PaginatedResponse<Goal>>> => {
+    const params = new URLSearchParams();
+
+    if (accountId !== null) params.append("account", accountId);
+    if (type !== null) params.append("type", type);
+    if (status !== null) params.append("status", status);
+    params.append("page", page.toString());
+    params.append("size", size.toString());
+
     return fetchWithAuth<PaginatedResponse<Goal>>(
-      `/goals?account=${accountId}&type=${type}&status=${status}&page=${page}&size=${size}`
+      `/goals?${params.toString()}`
     );
   },
 
@@ -198,11 +225,16 @@ export const api = {
     page,
     size,
   }: {
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }): Promise<ApiResponse<PaginatedResponse<Category>>> => {
+    const params = new URLSearchParams();
+
+    params.append("page", page.toString());
+    params.append("size", size.toString());
+
     return fetchWithAuth<PaginatedResponse<Category>>(
-      `/categories?page=${page}&size=${size}`
+      `/categories?${params.toString()}`
     );
   },
 
@@ -223,11 +255,16 @@ export const api = {
     page,
     size,
   }: {
-    page?: number;
-    size?: number;
+    page: number;
+    size: number;
   }): Promise<ApiResponse<PaginatedResponse<Budget>>> => {
+    const params = new URLSearchParams();
+
+    params.append("page", page.toString());
+    params.append("size", size.toString());
+
     return fetchWithAuth<PaginatedResponse<Budget>>(
-      `/budgets/current?page=${page}&size=${size}`
+      `/budgets/current?${params.toString()}`
     );
   },
 
