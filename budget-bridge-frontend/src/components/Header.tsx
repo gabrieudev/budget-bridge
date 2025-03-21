@@ -10,18 +10,17 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import {
-  Home,
-  Menu,
   ArrowBigRightDash,
   CreditCard,
-  PiggyBankIcon,
   GoalIcon,
+  Home,
+  Menu,
+  PiggyBankIcon,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Profile from "./Profile";
-import { AuthStatus } from "./AuthStatus";
-import Image from "next/image";
 
 const routes = [
   {
@@ -51,13 +50,7 @@ const routes = [
   },
 ];
 
-export function Header({
-  username,
-  email,
-}: {
-  username: string;
-  email: string;
-}) {
+export function Header() {
   const pathname = usePathname();
 
   return (
@@ -124,7 +117,7 @@ export function Header({
         </div>
 
         <div className="flex items-center gap-2">
-          <Profile username={username} email={email} />
+          <Profile />
         </div>
       </div>
     </header>

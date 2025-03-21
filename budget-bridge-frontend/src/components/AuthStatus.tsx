@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { LogOut } from "lucide-react";
-import federatedLogout from "@/utils/federatedLogout";
+import federatedLogout from "@/lib/federatedLogout";
 
 export function AuthStatus() {
   return (

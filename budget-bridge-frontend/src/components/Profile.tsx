@@ -11,18 +11,14 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import federatedLogout from "@/utils/federatedLogout";
+import federatedLogout from "@/lib/federatedLogout";
 import { LogOut, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { SettingsDialog } from "./SettingsDialog";
+import { useSession } from "next-auth/react";
 
-export default function Profile({
-  username,
-  email,
-}: {
-  username: string;
-  email: string;
-}) {
+export default function Profile() {
+  const { data: session } = useSession();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const handleSettingsOpen = (e: Event) => {
@@ -39,7 +35,7 @@ export default function Profile({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{username}</DropdownMenuLabel>
+        <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem onSelect={handleSettingsOpen}>
@@ -58,12 +54,7 @@ export default function Profile({
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
-      <SettingsDialog
-        open={isSettingsOpen}
-        onOpenChange={setIsSettingsOpen}
-        username={username}
-        email={email}
-      />
+      <SettingsDialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen} />
     </DropdownMenu>
   );
 }

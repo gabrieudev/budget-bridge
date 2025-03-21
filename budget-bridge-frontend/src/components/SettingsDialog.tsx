@@ -9,18 +9,17 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ThemeToggle } from "./ThemeToggle";
+import { useSession } from "next-auth/react";
 
 export function SettingsDialog({
   open,
   onOpenChange,
-  username,
-  email,
 }: {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  username: string;
-  email: string;
 }) {
+  const { data: session } = useSession();
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild></DialogTrigger>
@@ -38,12 +37,12 @@ export function SettingsDialog({
           <TabsContent value="account">
             <div className="flex items-center justify-between mb-4 mt-4">
               <h2 className="text-lg font-semibold">Nome</h2>
-              <p>{username}</p>
+              <p>{session?.user?.name}</p>
             </div>
 
             <div className="flex items-center justify-between mb-4 mt-4">
               <h2 className="text-lg font-semibold">E-mail</h2>
-              <p>{email}</p>
+              <p>{session?.user?.email}</p>
             </div>
           </TabsContent>
 
