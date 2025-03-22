@@ -31,7 +31,7 @@ public interface JpaTransactionRepository extends JpaRepository<JpaTransactionEn
                     (
                         (:startDate IS NULL OR :endDate IS NULL)
                     OR
-                        (t.date BETWEEN :startDate AND :endDate)
+                        (t.transaction_date BETWEEN :startDate AND :endDate)
                     )
                 """,
         nativeQuery = true
